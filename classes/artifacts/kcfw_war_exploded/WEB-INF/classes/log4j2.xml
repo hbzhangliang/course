@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+  <Properties>
+    <!--<Property name="log-path">/var/logs/gwideal</Property>-->
+    <Property name="log-path">e://logs/core</Property>
+  </Properties>
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+    <file name="bulletin_console" fileName="${log-path}/bulletin_console.log">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </file>
+    <!--    <File name="log4jdbc_select" fileName="${log-path}/log4jdbc_select.log">
+          <MarkerFilter marker="LOG4JDBC_SELECT" onMatch="ACCEPT" onMismatch="DENY"/>
+          <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %level - %m%n%ex%n"/>
+        </File>
+        <File name="log4jdbc_file" fileName="${log-path}/log4jdbc.log">
+          <MarkerFilter marker="LOG4JDBC_SELECT" onMatch="DENY" onMismatch="NEUTRAL"/>
+          <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %level - %m%n%ex%n"/>
+        </File>-->
+  </appenders>
+  <loggers>
+    <root level="debug">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="core_console"/>
+    </root>
+  </loggers>
+</configuration>

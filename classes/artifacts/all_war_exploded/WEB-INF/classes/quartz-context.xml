@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <context:component-scan base-package="com.gwideal.task"/>
+
+  <!-- For times when you need more complex processing, passing data to the scheduled job -->
+  <bean name="taskJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="com.gwideal.task.TaskJob"/>
+    <property name="jobDataMap">
+      <map>
+        <entry key="task" value-ref="task"/>
+      </map>
+    </property>
+    <property name="durability" value="true"/>
+  </bean>
+
+  <!-- 每月1日0点01分触发自动归档  -->
+  <bean id="taskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="taskJobDetail"/>
+    <property name="cronExpression" value="0 1 0 1 * ?"/>
+  </bean>
+
+  <!-- Scheduler factory bean to glue together jobDetails and triggers to Configure Quartz Scheduler -->
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="jobDetails">
+      <list>
+        <ref bean="taskJobDetail"/>
+      </list>
+    </property>
+    <property name="triggers">
+      <list>
+        <ref bean="taskTrigger"/>
+      </list>
+    </property>
+  </bean>
+</beans>
