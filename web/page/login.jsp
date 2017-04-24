@@ -5,6 +5,8 @@
 <script src="${resources}/js/cookie.js"></script>
 </head>
 <body class="boby" onload="initProfile()">
+
+
 <!--header start-->
 <div class="header-bg">
   <div class="header auto">
